@@ -1,12 +1,25 @@
 package eredua.domeinua;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 @Entity
 public class Erabiltzailea {
 @Id
 private String izena;
 private String pasahitza;
 private String mota;
+@OneToMany(targetEntity=LoginGertaera.class, mappedBy="erabiltzailea", cascade= {CascadeType.REMOVE,CascadeType.PERSIST}, fetch=FetchType.EAGER)
+private Set<LoginGertaera> gertaerak;
+public Set<LoginGertaera> getGertaerak() {
+return gertaerak;
+}
+public void setGertaerak(Set<LoginGertaera> gertaerak) {
+this.gertaerak = gertaerak;
+}
 public Erabiltzailea (){}
 public String getMota() {
 return mota; }

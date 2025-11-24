@@ -2,6 +2,8 @@ package eredua.domeinua;
 import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,8 +14,9 @@ public class LoginGertaera {
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id;
 private String deskribapena;
+@Column(nullable = false)
 private Date data;
-@ManyToOne(fetch=FetchType.LAZY)
+@ManyToOne(targetEntity=Erabiltzailea.class, cascade=CascadeType.PERSIST, fetch=FetchType.EAGER) 
 private Erabiltzailea erabiltzailea;
 private boolean login;
 public LoginGertaera() {
