@@ -13,6 +13,8 @@ import jakarta.faces.context.FacesContext;
 import jakarta.faces.event.AjaxBehaviorEvent;
 import jakarta.inject.Named;
 
+import nagusia.GertaerakDataAccess;
+
 @Named("login")
 @SessionScoped
 public class LoginBean implements Serializable {
@@ -21,6 +23,7 @@ public class LoginBean implements Serializable {
 	private Date data;
 	private ErabiltzailearenMota mota;
 	private static List<ErabiltzailearenMota> motak=new ArrayList<ErabiltzailearenMota>();
+	private GertaerakDataAccess dataAccess = new GertaerakDataAccess();
 
 //	public LoginBean() {
 //		motak.add(new ErabiltzailearenMota(1,"ikaslea"));
@@ -66,17 +69,19 @@ public class LoginBean implements Serializable {
 	}
 
 	public String egiaztatu() {
-		if (izena.length()!=pasahitza.length()){
-		 FacesContext.getCurrentInstance().addMessage(null,
-		 new FacesMessage("Errorea: izenaren eta pasahitzaren luzera desberdinak dira."));
-		 return null;
-		}
-		if (izena.equals("pirata"))
-		return "error";
-		else
+		// if (izena.length() != pasahitza.length()) {
+		// FacesContext.getCurrentInstance().addMessage(null,
+		// new FacesMessage("Errorea: izenaren eta pasahitzaren luzera desberdinak dira."));
+		// return null;
+		// }
+		// if (izena.equals("pirata"))
+		// return "error";
+		// else
+		// return "ok";
+		if (dataAccess.login(izena, pasahitza, mota.getErabMota()))
 		return "ok";
-		}
-	
+		else return "error";
+		}	
 	public Date getData() {
 		return data;
 	}
@@ -86,7 +91,7 @@ public class LoginBean implements Serializable {
 	
 	public void onDateSelect(SelectEvent event) {
 		FacesContext.getCurrentInstance().addMessage(null,
-		 new FacesMessage("Data aukeratua: "+event.getObject()));
+	 	 new FacesMessage("Data aukeratua: "+event.getObject()));
 		}
 	public void listener(AjaxBehaviorEvent event) {
 		 FacesContext.getCurrentInstance().addMessage(null,
@@ -96,6 +101,6 @@ public class LoginBean implements Serializable {
 		this.mota=(ErabiltzailearenMota)event.getObject();
 		// Egia esan, selection="#{login.mota}" atributuarekin ere lortzen da
 		FacesContext.getCurrentInstance().addMessage("nireForm:mezuak",
-		 new FacesMessage("Erabiltzailearen mota (taula):"+mota.getKodea()+"/"+mota.getErabMota()));}
+	 	 new FacesMessage("Erabiltzailearen mota (taula):"+mota.getKodea()+"/"+mota.getErabMota()));}
 
 }

@@ -2,12 +2,15 @@ package eredua.domeinua;
 import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+@NamedEntityGraph(name = "LoginGertaera.erabiltzailearekin", attributeNodes = @NamedAttributeNode("erabiltzailea"))
 @Entity
 public class LoginGertaera {
 @Id
@@ -16,7 +19,7 @@ private Long id;
 private String deskribapena;
 @Column(nullable = false)
 private Date data;
-@ManyToOne(targetEntity=Erabiltzailea.class, cascade=CascadeType.PERSIST, fetch=FetchType.EAGER) 
+@ManyToOne(targetEntity=Erabiltzailea.class, cascade=CascadeType.PERSIST, fetch=FetchType.LAZY)
 private Erabiltzailea erabiltzailea;
 private boolean login;
 public LoginGertaera() {
